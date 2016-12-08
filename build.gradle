@@ -3,6 +3,9 @@
 buildscript {
     repositories {
         jcenter()
+        flatDir {
+            dirs 'src/libs'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -15,7 +18,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        flatDir {
+            dirs 'src/libs'
+        }
     }
+
 }
 
 task clean(type: Delete) {
