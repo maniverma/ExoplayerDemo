@@ -117,8 +117,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextureView = (TextureView) findViewById(R.id.videoview);
-
-
         shouldAutoPlay = true;
         mediaDataSourceFactory = buildDataSourceFactory(true);
         mainHandler = new Handler();
@@ -144,7 +142,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
 
     private void releasePlayer() {
         if (player != null) {
-//            debugViewHelper.stop();
             debugViewHelper = null;
             shouldAutoPlay = player.getPlayWhenReady();
             playerWindow = player.getCurrentWindowIndex();
@@ -156,7 +153,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
             player.release();
             player = null;
             trackSelector = null;
-            //    trackSelectionHelper = null;
             eventLogger = null;
         }
     }
@@ -243,7 +239,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
             player.setId3Output(eventLogger);
             player.setPlayWhenReady(true);
             player.setVideoTextureView(mTextureView);
-//            simpleExoPlayerView.setPlayer(player);
             if (isTimelineStatic) {
                 if (playerPosition == C.TIME_UNSET) {
                     player.seekToDefaultPosition(playerWindow);
@@ -252,13 +247,9 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
                 }
             }
             player.setPlayWhenReady(shouldAutoPlay);
-//            debugViewHelper = new DebugTextViewHelper(player, debugTextView);
-//            debugViewHelper.start();
             playerNeedsSource = true;
         }
-
-
-            startPlay();
+        startPlay();
 
     }
 
@@ -270,24 +261,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
         if (playerNeedsSource) {
 
             Uri uris = Uri.parse(mCurrentPath);
-            String[] extensions;
-     /* if (ACTION_VIEW.equals(action)) {
-        uris = new Uri[] {intent.getData()};
-        extensions = new String[] {intent.getStringExtra(EXTENSION_EXTRA)};
-      }*/ /*else if (ACTION_VIEW_LIST.equals(action)) {
-        String[] uriStrings = intent.getStringArrayExtra(URI_LIST_EXTRA);
-        uris = new Uri[uriStrings.length];
-        for (int i = 0; i < uriStrings.length; i++) {
-          uris[i] = Uri.parse(uriStrings[i]);
-        }
-        extensions = intent.getStringArrayExtra(EXTENSION_LIST_EXTRA);
-        if (extensions == null) {
-          extensions = new String[uriStrings.length];
-        }
-      } else {
-        showToast(getString(R.string.unexpected_intent_action, action));
-        return;
-      }*/
             if (Util.maybeRequestReadExternalStoragePermission(this, uris)) {
                 // The player will be reinitialized if the permission is granted.
                 return;
@@ -299,7 +272,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
                     : new ConcatenatingMediaSource(mediaSources);
             player.prepare(mediaSource, !isTimelineStatic, !isTimelineStatic);
             playerNeedsSource = false;
-//            updateButtonVisibilities();
         }
     }
 
