@@ -8,23 +8,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.TextureView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iappstreet.exoplayerdemo.Utils.EventLogger;
 import com.example.iappstreet.exoplayerdemo.Utils.MyApplication;
-import com.example.iappstreet.exoplayerdemo.model.Playlist;
-import com.example.iappstreet.exoplayerdemo.model.PlaylistItem;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.ExoPlayerLibraryInfo;
-import com.google.android.exoplayer2.Renderer;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.drm.DrmSessionManager;
@@ -49,7 +41,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelections;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.DebugTextViewHelper;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
@@ -61,36 +52,16 @@ import java.net.CookiePolicy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import static com.example.iappstreet.exoplayerdemo.PlayerActivity.PREFER_EXTENSION_DECODERS;
-
-
 public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTextureListener,ExoPlayer.EventListener,
         TrackSelector.EventListener<MappingTrackSelector.MappedTrackInfo> {
 
     private TextureView mTextureView;
     SimpleExoPlayer player;
-
     private String mCurrentPath = "http://movieshls001-a.erosnow.com/hls/movie/4/1023354/theatricaltrailer/6613129/1023354_6613129_IPAD_ALL_multi.m3u8";
-
     public static final String DRM_SCHEME_UUID_EXTRA = "drm_scheme_uuid";
     public static final String DRM_LICENSE_URL = "drm_license_url";
     public static final String DRM_KEY_REQUEST_PROPERTIES = "drm_key_request_properties";
     public static final String PREFER_EXTENSION_DECODERS = "prefer_extension_decoders";
-    private boolean mIsStreaming = false;
-    private  PLAYBACK_ASSET mPlaybackAsset;
-    private  AD_TYPE mAdType;
-    public static final String ACTION_VIEW = "com.google.android.exoplayer.demo.action.VIEW";
-    public static final String EXTENSION_EXTRA = "extension";
-    private PlaylistItem mPlaylistItem;
-
-    public static final String ACTION_VIEW_LIST =
-            "com.google.android.exoplayer.demo.action.VIEW_LIST";
-    public static final String URI_LIST_EXTRA = "uri_list";
-    public static final String EXTENSION_LIST_EXTRA = "extension_list";
-
-    public static String KEY_PLAYLIST = "KEY_PLAYLIST";
-
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private static final CookieManager DEFAULT_COOKIE_MANAGER;
 
@@ -128,33 +99,13 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
     public void onTrackSelectionsChanged(TrackSelections<? extends MappingTrackSelector.MappedTrackInfo> trackSelections) {
 
     }
-
-    private enum PLAYBACK_ASSET {
-        AD,
-        CONTENT
-    }
-
-    private enum AD_TYPE {
-        PREROLL,
-        MIDROLL,
-        POSTROLL
-    }
-
     private Handler mainHandler;
     private Timeline.Window window;
     private EventLogger eventLogger;
-//    private SimpleExoPlayerView simpleExoPlayerView;
-    private LinearLayout debugRootView;
-    private TextView debugTextView;
-    private Button retryButton;
-    public static String KEY_BUNDLE_EXTRA = "KEY_BUNDLE_EXTRA";
-
     private DataSource.Factory mediaDataSourceFactory;
     private MappingTrackSelector trackSelector;
-    //  private TrackSelectionHelper trackSelectionHelper;
     private DebugTextViewHelper debugViewHelper;
     private boolean playerNeedsSource;
-
     private boolean shouldAutoPlay;
     private boolean isTimelineStatic;
     private int playerWindow;
@@ -166,7 +117,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextureView = (TextureView) findViewById(R.id.videoview);
-        //player = ExoPlayerFactory.newSimpleInstance(ExoPlayerActivity.this, new DefaultTrackSelector(new Handler()), new DefaultLoadControl());
 
 
         shouldAutoPlay = true;
@@ -176,15 +126,6 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
         if (CookieHandler.getDefault() != DEFAULT_COOKIE_MANAGER) {
             CookieHandler.setDefault(DEFAULT_COOKIE_MANAGER);
         }
-//        mVideoPlazaPlugs = VideoplazaPlugin.getInstance();
-
-//        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
-//        simpleExoPlayerView.setControllerVisibilityListener(this);
-//        simpleExoPlayerView.requestFocus();
-
-
-
-
     }
 
 
