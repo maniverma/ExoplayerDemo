@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.iappstreet.exoplayerdemo.Utils.EventLogger;
 import com.example.iappstreet.exoplayerdemo.Utils.MyApplication;
+import com.example.iappstreet.exoplayerdemo.Utils.view.CustomPlaybackControlView;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -65,6 +67,8 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private static final CookieManager DEFAULT_COOKIE_MANAGER;
 
+    CustomPlaybackControlView playbackControlView;
+
     static {
         DEFAULT_COOKIE_MANAGER = new CookieManager();
         DEFAULT_COOKIE_MANAGER.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
@@ -116,6 +120,7 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        playbackControlView = (CustomPlaybackControlView)findViewById(R.id.control);
         mTextureView = (TextureView) findViewById(R.id.videoview);
         shouldAutoPlay = true;
         mediaDataSourceFactory = buildDataSourceFactory(true);
@@ -124,6 +129,8 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
         if (CookieHandler.getDefault() != DEFAULT_COOKIE_MANAGER) {
             CookieHandler.setDefault(DEFAULT_COOKIE_MANAGER);
         }
+
+        playbackControlView.show();
     }
 
 
