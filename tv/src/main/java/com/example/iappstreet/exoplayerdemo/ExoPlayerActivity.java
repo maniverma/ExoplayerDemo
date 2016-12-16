@@ -246,6 +246,8 @@ public class ExoPlayerActivity extends Activity implements TextureView.SurfaceTe
             player.setId3Output(eventLogger);
             player.setPlayWhenReady(true);
             player.setVideoTextureView(mTextureView);
+
+            playbackControlView.setPlayer(player);
             if (isTimelineStatic) {
                 if (playerPosition == C.TIME_UNSET) {
                     player.seekToDefaultPosition(playerWindow);
